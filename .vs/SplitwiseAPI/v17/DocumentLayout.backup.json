@@ -1,0 +1,554 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\models\\usergroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:models\\usergroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\services\\services\\userexpenseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:services\\services\\userexpenseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\repositories\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:repositories\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\repositories\\repositories\\userexpenserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:repositories\\repositories\\userexpenserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\repositories\\repositories\\grouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:repositories\\repositories\\grouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\repositories\\repositories\\expenserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:repositories\\repositories\\expenserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\services\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:services\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\services\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:services\\services\\groupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\services\\services\\expenseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:services\\services\\expenseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\models\\userexpensetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:models\\userexpensetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\models\\userexpense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:models\\userexpense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\models\\group.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:models\\group.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\models\\expense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:models\\expense.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userexpensedtos\\userexpenseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userexpensedtos\\userexpenseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userexpensedtos\\updateuserexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userexpensedtos\\updateuserexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userexpensedtos\\groupbalancesummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userexpensedtos\\groupbalancesummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userexpensedtos\\createuserexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userexpensedtos\\createuserexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userdtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userdtos\\userresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userdtos\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userdtos\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\userdtos\\createuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\userdtos\\createuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\groupdtos\\updategroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\groupdtos\\updategroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\groupdtos\\groupresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\groupdtos\\groupresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\groupdtos\\creategroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\groupdtos\\creategroupdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\expensedtos\\updateexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\expensedtos\\updateexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\expensedtos\\simpleexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\expensedtos\\simpleexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\expensedtos\\expenseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\expensedtos\\expenseresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\dtos\\expensedtos\\createexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:dtos\\expensedtos\\createexpensedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\controllers\\userexpensescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:controllers\\userexpensescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|c:\\users\\berdan\\desktop\\gp1\\gp1-backend\\splitwiseapi\\controllers\\expensescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C37A9524-8FAC-4727-A258-B13F07C22991}|SplitwiseAPI.csproj|solutionrelative:controllers\\expensescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "Repositories\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAgwLQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:48:33.109Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserExpenseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\UserExpenseRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repositories\\UserExpenseRepository.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\UserExpenseRepository.cs",
+              "RelativeToolTip": "Repositories\\Repositories\\UserExpenseRepository.cs",
+              "ViewState": "AgIAAFgBAAAAAAAAAAAQwH0BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:48:29.086Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserExpenseService.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\UserExpenseService.cs",
+              "RelativeDocumentMoniker": "Services\\Services\\UserExpenseService.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\UserExpenseService.cs",
+              "RelativeToolTip": "Services\\Services\\UserExpenseService.cs",
+              "ViewState": "AgIAANAAAAAAAAAAAAAUwBEAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:47:58.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GroupRepository.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\GroupRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repositories\\GroupRepository.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\GroupRepository.cs",
+              "RelativeToolTip": "Repositories\\Repositories\\GroupRepository.cs",
+              "ViewState": "AgIAALQAAAAAAAAAAAAgwNoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:48:25.351Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ExpenseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\ExpenseRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Repositories\\ExpenseRepository.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Repositories\\Repositories\\ExpenseRepository.cs",
+              "RelativeToolTip": "Repositories\\Repositories\\ExpenseRepository.cs",
+              "ViewState": "AgIAAPAAAAAAAAAAAAAgwBYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:48:21.678Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserGroup.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\UserGroup.cs",
+              "RelativeDocumentMoniker": "Models\\UserGroup.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\UserGroup.cs",
+              "RelativeToolTip": "Models\\UserGroup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:47:08.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAIwFkAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:48:38.639Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Services\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\UserService.cs",
+              "RelativeToolTip": "Services\\Services\\UserService.cs",
+              "ViewState": "AgIAABQBAAAAAAAAAAAgwDoBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:48:02.578Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GroupService.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\GroupService.cs",
+              "RelativeDocumentMoniker": "Services\\Services\\GroupService.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\GroupService.cs",
+              "RelativeToolTip": "Services\\Services\\GroupService.cs",
+              "ViewState": "AgIAAGUBAAAAAAAAAAAgwIsBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:47:54.391Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ExpenseService.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\ExpenseService.cs",
+              "RelativeDocumentMoniker": "Services\\Services\\ExpenseService.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Services\\Services\\ExpenseService.cs",
+              "RelativeToolTip": "Services\\Services\\ExpenseService.cs",
+              "ViewState": "AgIAAAgCAAAAAAAAAAAIwDACAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:47:50.236Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "UserExpenseType.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\UserExpenseType.cs",
+              "RelativeDocumentMoniker": "Models\\UserExpenseType.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\UserExpenseType.cs",
+              "RelativeToolTip": "Models\\UserExpenseType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:46:56.454Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "UserExpense.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\UserExpense.cs",
+              "RelativeDocumentMoniker": "Models\\UserExpense.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\UserExpense.cs",
+              "RelativeToolTip": "Models\\UserExpense.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:46:48.983Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\User.cs",
+              "RelativeDocumentMoniker": "Models\\User.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\User.cs",
+              "RelativeToolTip": "Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:46:40.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Group.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\Group.cs",
+              "RelativeDocumentMoniker": "Models\\Group.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\Group.cs",
+              "RelativeToolTip": "Models\\Group.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:46:31.692Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Expense.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\Expense.cs",
+              "RelativeDocumentMoniker": "Models\\Expense.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Models\\Expense.cs",
+              "RelativeToolTip": "Models\\Expense.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:46:23.216Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserExpenseResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\UserExpenseResponseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserExpenseDTOs\\UserExpenseResponseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\UserExpenseResponseDto.cs",
+              "RelativeToolTip": "DTOs\\UserExpenseDTOs\\UserExpenseResponseDto.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAwwDwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:45:12.939Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "UpdateUserExpenseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\UpdateUserExpenseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserExpenseDTOs\\UpdateUserExpenseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\UpdateUserExpenseDto.cs",
+              "RelativeToolTip": "DTOs\\UserExpenseDTOs\\UpdateUserExpenseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:45:13.131Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "GroupBalanceSummaryDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\GroupBalanceSummaryDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserExpenseDTOs\\GroupBalanceSummaryDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\GroupBalanceSummaryDto.cs",
+              "RelativeToolTip": "DTOs\\UserExpenseDTOs\\GroupBalanceSummaryDto.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAA0wFEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:45:04.805Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CreateUserExpenseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\CreateUserExpenseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserExpenseDTOs\\CreateUserExpenseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserExpenseDTOs\\CreateUserExpenseDto.cs",
+              "RelativeToolTip": "DTOs\\UserExpenseDTOs\\CreateUserExpenseDto.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAADwvy0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:44:56.767Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "UserResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserDTOs\\UserResponseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserDTOs\\UserResponseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserDTOs\\UserResponseDto.cs",
+              "RelativeToolTip": "DTOs\\UserDTOs\\UserResponseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:44:46.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "UpdateUserDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserDTOs\\UpdateUserDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserDTOs\\UpdateUserDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserDTOs\\UpdateUserDto.cs",
+              "RelativeToolTip": "DTOs\\UserDTOs\\UpdateUserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:44:38.44Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "CreateUserDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserDTOs\\CreateUserDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\UserDTOs\\CreateUserDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\UserDTOs\\CreateUserDto.cs",
+              "RelativeToolTip": "DTOs\\UserDTOs\\CreateUserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:44:29.474Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "UpdateGroupDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\GroupDTOs\\UpdateGroupDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\GroupDTOs\\UpdateGroupDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\GroupDTOs\\UpdateGroupDto.cs",
+              "RelativeToolTip": "DTOs\\GroupDTOs\\UpdateGroupDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:44:18.652Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "GroupResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\GroupDTOs\\GroupResponseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\GroupDTOs\\GroupResponseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\GroupDTOs\\GroupResponseDto.cs",
+              "RelativeToolTip": "DTOs\\GroupDTOs\\GroupResponseDto.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAwCcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:44:08.966Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CreateGroupDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\GroupDTOs\\CreateGroupDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\GroupDTOs\\CreateGroupDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\GroupDTOs\\CreateGroupDto.cs",
+              "RelativeToolTip": "DTOs\\GroupDTOs\\CreateGroupDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:43:58.642Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "UpdateExpenseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\UpdateExpenseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\ExpenseDTOs\\UpdateExpenseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\UpdateExpenseDto.cs",
+              "RelativeToolTip": "DTOs\\ExpenseDTOs\\UpdateExpenseDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:43:49.567Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "SimpleExpenseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\SimpleExpenseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\ExpenseDTOs\\SimpleExpenseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\SimpleExpenseDto.cs",
+              "RelativeToolTip": "DTOs\\ExpenseDTOs\\SimpleExpenseDto.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAwCgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:43:41.146Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ExpenseResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\ExpenseResponseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\ExpenseDTOs\\ExpenseResponseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\ExpenseResponseDto.cs",
+              "RelativeToolTip": "DTOs\\ExpenseDTOs\\ExpenseResponseDto.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAA0wDEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:43:28.376Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "CreateExpenseDto.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\CreateExpenseDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\ExpenseDTOs\\CreateExpenseDto.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\DTOs\\ExpenseDTOs\\CreateExpenseDto.cs",
+              "RelativeToolTip": "DTOs\\ExpenseDTOs\\CreateExpenseDto.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAADwvycAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:43:17.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAIwGoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:42:44.06Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAAALwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:42:23.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "UserExpensesController.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Controllers\\UserExpensesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserExpensesController.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Controllers\\UserExpensesController.cs",
+              "RelativeToolTip": "Controllers\\UserExpensesController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowEUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:42:01.329Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "ExpensesController.cs",
+              "DocumentMoniker": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Controllers\\ExpensesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ExpensesController.cs",
+              "ToolTip": "C:\\Users\\berdan\\Desktop\\GP1\\GP1-BACKEND\\SplitwiseAPI\\Controllers\\ExpensesController.cs",
+              "RelativeToolTip": "Controllers\\ExpensesController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAgwHMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-15T07:41:47.359Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
