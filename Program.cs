@@ -8,6 +8,9 @@ using SplitwiseAPI.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Bu satırı ekleyin - external IP'den erişim için
+builder.WebHost.UseUrls("http://0.0.0.0:5089");
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -64,7 +67,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// HTTPS yönlendirmesini kaldırın - mobil erişim için HTTP kullanacağız
+// app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
 

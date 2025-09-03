@@ -90,6 +90,7 @@ C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\SplitwiseA
 C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\SplitwiseAPI.csproj.CoreCompileInputs.cache
 C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\SplitwiseAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\SplitwiseAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\SplitwiseAPI.sourcelink.json
 C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\scopedcss\bundle\SplitwiseAPI.styles.css
 C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\berdan\Desktop\GP1\GP1-BACKEND\SplitwiseAPI\obj\Debug\net9.0\staticwebassets.build.json.cache

@@ -1,0 +1,1434 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseAPI.DTOs.ExpenseDTOs;
+using SplitwiseAPI.Services.Interfaces;
+
+namespace SplitwiseAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class ExpensesController : ControllerBase
+    {
+        private readonly IExpenseService _expenseService;
+
+        public ExpensesController(IExpenseService expenseService)
+        {
+            _expenseService = expenseService;
+        }
+
+        /// <summary>
+        /// Get all expenses (for admin, general listing)
+        /// </summary>
+        /// <returns>List of all expenses</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<ExpenseListDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ExpenseListDto>>> GetAllExpenses()
+        {
+            var expenses = await _expenseService.GetAllExpensesAsync();
+            return Ok(expenses);
+        }
+
+        /// <summary>
+        /// Create a simple expense with equal split (core feature)
+        /// </summary>
+        /// <param name="simpleExpenseDto">Simple expense creation data</param>
+        /// <returns>Created expense</returns>
+        [HttpPost("simple")]
+        [ProducesResponseType(typeof(ExpenseResponseDto), 201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<ExpenseResponseDto>> CreateSimpleExpense([FromBody] SimpleExpenseDto simpleExpenseDto)
+        {
+            try
+            {
+                var expense = await _expenseService.CreateSimpleExpenseAsync(simpleExpenseDto);
+                return CreatedAtAction(nameof(GetExpense), new { id = expense.ExpenseId }, expense);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get expense by ID
+        /// </summary>
+        /// <param name="id">Expense ID</param>
+        /// <returns>Expense details</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ExpenseResponseDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<ExpenseResponseDto>> GetExpense(int id)
+        {
+            var expense = await _expenseService.GetExpenseByIdAsync(id);
+            if (expense == null)
+                return NotFound($"Expense with ID {id} not found");
+
+            return Ok(expense);
+        }
+
+        /// <summary>
+        /// Delete an expense (for error correction)
+        /// </summary>
+        /// <param name="id">Expense ID</param>
+        /// <returns>Success status</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteExpense(int id)
+        {
+            var result = await _expenseService.DeleteExpenseAsync(id);
+            if (!result)
+                return NotFound($"Expense with ID {id} not found");
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Get expenses by group
+        /// </summary>
+        /// <param name="groupId">Group ID</param>
+        /// <returns>Group expenses</returns>
+        [HttpGet("group/{groupId}")]
+        [ProducesResponseType(typeof(IEnumerable<ExpenseListDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ExpenseListDto>>> GetExpensesByGroup(int groupId)
+        {
+            var expenses = await _expenseService.GetExpensesByGroupIdAsync(groupId);
+            return Ok(expenses);
+        }
+
+        /// <summary>
+        /// Get expenses by user
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <returns>User expenses</returns>
+        [HttpGet("user/{userId}")]
+        [ProducesResponseType(typeof(IEnumerable<ExpenseListDto>), 200)]
+        public async Task<ActionResult<IEnumerable<ExpenseListDto>>> GetExpensesByUser(int userId)
+        {
+            var expenses = await _expenseService.GetExpensesByUserIdAsync(userId);
+            return Ok(expenses);
+        }
+    }
+}﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseAPI.DTOs.GroupDTOs;
+using SplitwiseAPI.DTOs.UserExpenseDTOs;
+using SplitwiseAPI.Services.Interfaces;
+
+namespace SplitwiseAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class GroupsController : ControllerBase
+    {
+        private readonly IGroupService _groupService;
+
+        public GroupsController(IGroupService groupService)
+        {
+            _groupService = groupService;
+        }
+
+        /// <summary>
+        /// Get all groups (for dropdowns, group selection)
+        /// </summary>
+        /// <returns>List of all groups</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<GroupResponseDto>), 200)]
+        public async Task<ActionResult<IEnumerable<GroupResponseDto>>> GetAllGroups()
+        {
+            var groups = await _groupService.GetAllGroupsAsync();
+            return Ok(groups);
+        }
+
+        /// <summary>
+        /// Create a new group
+        /// </summary>
+        /// <param name="createGroupDto">Group creation data</param>
+        /// <returns>Created group</returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(GroupResponseDto), 201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<GroupResponseDto>> CreateGroup([FromBody] CreateGroupDto createGroupDto)
+        {
+            var group = await _groupService.CreateGroupAsync(createGroupDto);
+            return CreatedAtAction(nameof(GetGroup), new { id = group.GroupId }, group);
+        }
+
+        /// <summary>
+        /// Get group by ID
+        /// </summary>
+        /// <param name="id">Group ID</param>
+        /// <returns>Group details</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GroupResponseDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GroupResponseDto>> GetGroup(int id)
+        {
+            var group = await _groupService.GetGroupByIdAsync(id);
+            if (group == null)
+                return NotFound($"Group with ID {id} not found");
+
+            return Ok(group);
+        }
+
+        /// <summary>
+        /// Get group members list
+        /// </summary>
+        /// <param name="id">Group ID</param>
+        /// <returns>List of group members</returns>
+        [HttpGet("{id}/members")]
+        [ProducesResponseType(typeof(IEnumerable<GroupMemberDto>), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<IEnumerable<GroupMemberDto>>> GetGroupMembers(int id)
+        {
+            if (!await _groupService.GroupExistsAsync(id))
+                return NotFound($"Group with ID {id} not found");
+
+            var members = await _groupService.GetGroupMembersAsync(id);
+            return Ok(members);
+        }
+
+        /// <summary>
+        /// Add user to group
+        /// </summary>
+        /// <param name="id">Group ID</param>
+        /// <param name="userId">User ID to add</param>
+        /// <returns>Success status</returns>
+        [HttpPost("{id}/members/{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> AddUserToGroup(int id, int userId)
+        {
+            try
+            {
+                var result = await _groupService.AddUserToGroupAsync(id, userId);
+                if (!result)
+                    return BadRequest("User is already in the group");
+
+                return Ok(new { message = "User added to group successfully" });
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Remove user from group
+        /// </summary>
+        /// <param name="id">Group ID</param>
+        /// <param name="userId">User ID to remove</param>
+        /// <returns>Success status</returns>
+        [HttpDelete("{id}/members/{userId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> RemoveUserFromGroup(int id, int userId)
+        {
+            try
+            {
+                var result = await _groupService.RemoveUserFromGroupAsync(id, userId);
+                if (!result)
+                    return NotFound("User not found in group");
+
+                return Ok(new { message = "User removed from group successfully" });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get group balance summary (core feature)
+        /// </summary>
+        /// <param name="id">Group ID</param>
+        /// <returns>Group balance summary</returns>
+        [HttpGet("{id}/balance")]
+        [ProducesResponseType(typeof(GroupBalanceSummaryDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<GroupBalanceSummaryDto>> GetGroupBalanceSummary(int id)
+        {
+            try
+            {
+                var balanceSummary = await _groupService.GetGroupBalanceSummaryAsync(id);
+                return Ok(balanceSummary);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"Group with ID {id} not found");
+            }
+        }
+
+        /// <summary>
+        /// Get groups by user ID
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <returns>User's groups</returns>
+        [HttpGet("user/{userId}")]
+        [ProducesResponseType(typeof(IEnumerable<GroupResponseDto>), 200)]
+        public async Task<ActionResult<IEnumerable<GroupResponseDto>>> GetGroupsByUserId(int userId)
+        {
+            var groups = await _groupService.GetGroupsByUserIdAsync(userId);
+            return Ok(groups);
+        }
+    }
+}﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseAPI.DTOs.UserExpenseDTOs;
+using SplitwiseAPI.Services.Interfaces;
+
+namespace SplitwiseAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class UserExpensesController : ControllerBase
+    {
+        private readonly IUserExpenseService _userExpenseService;
+
+        public UserExpensesController(IUserExpenseService userExpenseService)
+        {
+            _userExpenseService = userExpenseService;
+        }
+
+        /// <summary>
+        /// Settle debt between users (core feature)
+        /// </summary>
+        /// <param name="settleDebtDto">Debt settlement data</param>
+        /// <returns>Settlement result</returns>
+        [HttpPost("settle-debt")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<bool>> SettleDebt([FromBody] SettleDebtDto settleDebtDto)
+        {
+            try
+            {
+                var result = await _userExpenseService.SettleDebtAsync(settleDebtDto);
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get simplified group debts
+        /// </summary>
+        /// <param name="groupId">Group ID</param>
+        /// <returns>Simplified group debts</returns>
+        [HttpGet("group/{groupId}/debts")]
+        [ProducesResponseType(typeof(IEnumerable<SimplifiedDebtDto>), 200)]
+        public async Task<ActionResult<IEnumerable<SimplifiedDebtDto>>> GetSimplifiedGroupDebts(int groupId)
+        {
+            var debts = await _userExpenseService.GetSimplifiedGroupDebtsAsync(groupId);
+            return Ok(debts);
+        }
+
+        /// <summary>
+        /// Get user debt details
+        /// </summary>
+        /// <param name="userId">User ID</param>
+        /// <returns>User debt details</returns>
+        [HttpGet("user/{userId}/debts")]
+        [ProducesResponseType(typeof(IEnumerable<UserDebtDetailDto>), 200)]
+        public async Task<ActionResult<IEnumerable<UserDebtDetailDto>>> GetUserDebtDetails(int userId)
+        {
+            var debtDetails = await _userExpenseService.GetUserDebtDetailsAsync(userId);
+            return Ok(debtDetails);
+        }
+    }
+}﻿using Microsoft.AspNetCore.Mvc;
+using SplitwiseAPI.DTOs.UserDTOs;
+using SplitwiseAPI.DTOs.UserExpenseDTOs;
+using SplitwiseAPI.Services.Interfaces;
+
+namespace SplitwiseAPI.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class UsersController : ControllerBase
+    {
+        private readonly IUserService _userService;
+
+        public UsersController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        /// <summary>
+        /// Get all users (for dropdowns, member selection)
+        /// </summary>
+        /// <returns>List of all users</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<UserResponseDto>), 200)]
+        public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAllUsers()
+        {
+            var users = await _userService.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+        /// <summary>
+        /// Create a new user
+        /// </summary>
+        /// <param name="createUserDto">User creation data</param>
+        /// <returns>Created user</returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(UserResponseDto), 201)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<UserResponseDto>> CreateUser([FromBody] CreateUserDto createUserDto)
+        {
+            try
+            {
+                var user = await _userService.CreateUserAsync(createUserDto);
+                return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get user by ID
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns>User details</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(UserResponseDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserResponseDto>> GetUser(int id)
+        {
+            var user = await _userService.GetUserByIdAsync(id);
+            if (user == null)
+                return NotFound($"User with ID {id} not found");
+
+            return Ok(user);
+        }
+
+        /// <summary>
+        /// Update user information
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <param name="updateUserDto">User update data</param>
+        /// <returns>Updated user</returns>
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(UserResponseDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserResponseDto>> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
+        {
+            try
+            {
+                var user = await _userService.UpdateUserAsync(id, updateUserDto);
+                if (user == null)
+                    return NotFound($"User with ID {id} not found");
+
+                return Ok(user);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Get user balance (core feature)
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns>User balance information</returns>
+        [HttpGet("{id}/balance")]
+        [ProducesResponseType(typeof(UserBalanceDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserBalanceDto>> GetUserBalance(int id)
+        {
+            try
+            {
+                var balance = await _userService.GetUserBalanceAsync(id);
+                return Ok(balance);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"User with ID {id} not found");
+            }
+        }
+
+        /// <summary>
+        /// Get user dashboard (core feature)
+        /// </summary>
+        /// <param name="id">User ID</param>
+        /// <returns>User dashboard data</returns>
+        [HttpGet("{id}/dashboard")]
+        [ProducesResponseType(typeof(UserDashboardDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserDashboardDto>> GetUserDashboard(int id)
+        {
+            try
+            {
+                var dashboard = await _userService.GetUserDashboardAsync(id);
+                return Ok(dashboard);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound($"User with ID {id} not found");
+            }
+        }
+
+        /// <summary>
+        /// Search users by phone number
+        /// </summary>
+        /// <param name="phone">Phone number</param>
+        /// <returns>User details</returns>
+        [HttpGet("search/phone/{phone}")]
+        [ProducesResponseType(typeof(UserResponseDto), 200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<UserResponseDto>> SearchUserByPhone(string phone)
+        {
+            var user = await _userService.GetUserByPhoneAsync(phone);
+            if (user == null)
+                return NotFound($"User with phone {phone} not found");
+
+            return Ok(user);
+        }
+
+        /// <summary>
+        /// Check if phone number exists (for registration validation)
+        /// </summary>
+        /// <param name="phone">Phone number</param>
+        /// <param name="excludeUserId">User ID to exclude from check</param>
+        /// <returns>Existence status</returns>
+        [HttpGet("phone-exists/{phone}")]
+        [ProducesResponseType(typeof(bool), 200)]
+        public async Task<ActionResult<bool>> CheckPhoneExists(string phone, [FromQuery] int? excludeUserId = null)
+        {
+            var exists = await _userService.PhoneExistsAsync(phone, excludeUserId);
+            return Ok(exists);
+        }
+
+        /// <summary>
+        /// Validate user credentials (for login)
+        /// </summary>
+        /// <param name="validateCredentialsDto">Credentials to validate</param>
+        /// <returns>Validation result</returns>
+        [HttpPost("validate")]
+        [ProducesResponseType(typeof(bool), 200)]
+        public async Task<ActionResult<bool>> ValidateCredentials([FromBody] ValidateCredentialsDto validateCredentialsDto)
+        {
+            var isValid = await _userService.ValidateUserCredentialsAsync(validateCredentialsDto.Phone, validateCredentialsDto.Password);
+            return Ok(isValid);
+        }
+    }
+
+    // Additional DTOs for controller endpoints
+    public class ValidateCredentialsDto
+    {
+        public string Phone { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+    }
+}﻿using Microsoft.EntityFrameworkCore;
+using SplitwiseAPI.Models;
+using System.Collections.Generic;
+using System.Reflection.Emit;
+
+namespace SplitwiseAPI.Data
+{
+    public class AppDbContext : DbContext
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
+        }
+
+        // DbSets
+        public DbSet<User> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<UserExpense> UserExpenses { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // User Entity Configuration
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Phone).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.Password).IsRequired().HasMaxLength(255);
+
+                // Unique constraint for phone number
+                entity.HasIndex(e => e.Phone).IsUnique();
+            });
+
+            // Group Entity Configuration
+            modelBuilder.Entity<Group>(entity =>
+            {
+                entity.HasKey(e => e.GroupId);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+            });
+
+            // Expense Entity Configuration
+            modelBuilder.Entity<Expense>(entity =>
+            {
+                entity.HasKey(e => e.ExpenseId);
+                entity.Property(e => e.Description).IsRequired().HasMaxLength(255);
+                entity.Property(e => e.Amount).IsRequired().HasColumnType("decimal(18,2)");
+                entity.Property(e => e.Password).IsRequired().HasMaxLength(255);
+
+                // Foreign key relationship with Group
+                entity.HasOne(e => e.Group)
+                      .WithMany(g => g.Expenses)
+                      .HasForeignKey(e => e.GroupId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // UserGroup Entity Configuration (Junction Table)
+            modelBuilder.Entity<UserGroup>(entity =>
+            {
+                entity.HasKey(e => e.UserGroupId);
+
+                // Foreign key relationships
+                entity.HasOne(ug => ug.User)
+                      .WithMany(u => u.UserGroups)
+                      .HasForeignKey(ug => ug.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(ug => ug.Group)
+                      .WithMany(g => g.UserGroups)
+                      .HasForeignKey(ug => ug.GroupId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Composite unique constraint to prevent duplicate user-group pairs
+                entity.HasIndex(e => new { e.UserId, e.GroupId }).IsUnique();
+            });
+
+            // UserExpense Entity Configuration
+            modelBuilder.Entity<UserExpense>(entity =>
+            {
+                entity.HasKey(e => e.UserExpenseId);
+                entity.Property(e => e.Amount).IsRequired().HasColumnType("decimal(18,2)");
+                entity.Property(e => e.Type).IsRequired();
+
+                // Foreign key relationships
+                entity.HasOne(ue => ue.User)
+                      .WithMany(u => u.UserExpenses)
+                      .HasForeignKey(ue => ue.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(ue => ue.Expense)
+                      .WithMany(e => e.UserExpenses)
+                      .HasForeignKey(ue => ue.ExpenseId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                // Composite unique constraint to prevent duplicate user-expense-type combinations
+                entity.HasIndex(e => new { e.UserId, e.ExpenseId, e.Type }).IsUnique();
+            });
+
+            // Enum Configuration
+            modelBuilder.Entity<UserExpense>()
+                       .Property(e => e.Type)
+                       .HasConversion<string>();
+        }
+    }
+}﻿// <auto-generated />
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SplitwiseAPI.Data;
+
+#nullable disable
+
+namespace SplitwiseAPI.Migrations
+{
+    [DbContext(typeof(AppDbContext))]
+    [Migration("20250811091725_InitialCreate")]
+    partial class InitialCreate
+    {
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Expense", b =>
+                {
+                    b.Property<int>("ExpenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ExpenseId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("ExpenseId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Group", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("GroupId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserExpense", b =>
+                {
+                    b.Property<int>("UserExpenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserExpenseId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserExpenseId");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.HasIndex("UserId", "ExpenseId", "Type")
+                        .IsUnique();
+
+                    b.ToTable("UserExpenses");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserGroup", b =>
+                {
+                    b.Property<int>("UserGroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserGroupId"));
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserGroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId", "GroupId")
+                        .IsUnique();
+
+                    b.ToTable("UserGroups");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Expense", b =>
+                {
+                    b.HasOne("SplitwiseAPI.Models.Group", "Group")
+                        .WithMany("Expenses")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserExpense", b =>
+                {
+                    b.HasOne("SplitwiseAPI.Models.Expense", "Expense")
+                        .WithMany("UserExpenses")
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SplitwiseAPI.Models.User", "User")
+                        .WithMany("UserExpenses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Expense");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserGroup", b =>
+                {
+                    b.HasOne("SplitwiseAPI.Models.Group", "Group")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SplitwiseAPI.Models.User", "User")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Expense", b =>
+                {
+                    b.Navigation("UserExpenses");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Group", b =>
+                {
+                    b.Navigation("Expenses");
+
+                    b.Navigation("UserGroups");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.User", b =>
+                {
+                    b.Navigation("UserExpenses");
+
+                    b.Navigation("UserGroups");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace SplitwiseAPI.Migrations
+{
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Groups",
+                columns: table => new
+                {
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Groups", x => x.GroupId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Phone = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Expenses",
+                columns: table => new
+                {
+                    ExpenseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expenses", x => x.ExpenseId);
+                    table.ForeignKey(
+                        name: "FK_Expenses_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "UserGroups",
+                columns: table => new
+                {
+                    UserGroupId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    GroupId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserGroups", x => x.UserGroupId);
+                    table.ForeignKey(
+                        name: "FK_UserGroups_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "GroupId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserGroups_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "UserExpenses",
+                columns: table => new
+                {
+                    UserExpenseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Type = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ExpenseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserExpenses", x => x.UserExpenseId);
+                    table.ForeignKey(
+                        name: "FK_UserExpenses_Expenses_ExpenseId",
+                        column: x => x.ExpenseId,
+                        principalTable: "Expenses",
+                        principalColumn: "ExpenseId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserExpenses_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Expenses_GroupId",
+                table: "Expenses",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserExpenses_ExpenseId",
+                table: "UserExpenses",
+                column: "ExpenseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserExpenses_UserId_ExpenseId_Type",
+                table: "UserExpenses",
+                columns: new[] { "UserId", "ExpenseId", "Type" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGroups_GroupId",
+                table: "UserGroups",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserGroups_UserId_GroupId",
+                table: "UserGroups",
+                columns: new[] { "UserId", "GroupId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Phone",
+                table: "Users",
+                column: "Phone",
+                unique: true);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "UserExpenses");
+
+            migrationBuilder.DropTable(
+                name: "UserGroups");
+
+            migrationBuilder.DropTable(
+                name: "Expenses");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Groups");
+        }
+    }
+}
+﻿// <auto-generated />
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SplitwiseAPI.Data;
+
+#nullable disable
+
+namespace SplitwiseAPI.Migrations
+{
+    [DbContext(typeof(AppDbContext))]
+    partial class AppDbContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Expense", b =>
+                {
+                    b.Property<int>("ExpenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ExpenseId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("ExpenseId");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Group", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("GroupId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("Phone")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserExpense", b =>
+                {
+                    b.Property<int>("UserExpenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserExpenseId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserExpenseId");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.HasIndex("UserId", "ExpenseId", "Type")
+                        .IsUnique();
+
+                    b.ToTable("UserExpenses");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserGroup", b =>
+                {
+                    b.Property<int>("UserGroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("UserGroupId"));
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserGroupId");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserId", "GroupId")
+                        .IsUnique();
+
+                    b.ToTable("UserGroups");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Expense", b =>
+                {
+                    b.HasOne("SplitwiseAPI.Models.Group", "Group")
+                        .WithMany("Expenses")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserExpense", b =>
+                {
+                    b.HasOne("SplitwiseAPI.Models.Expense", "Expense")
+                        .WithMany("UserExpenses")
+                        .HasForeignKey("ExpenseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SplitwiseAPI.Models.User", "User")
+                        .WithMany("UserExpenses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Expense");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.UserGroup", b =>
+                {
+                    b.HasOne("SplitwiseAPI.Models.Group", "Group")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SplitwiseAPI.Models.User", "User")
+                        .WithMany("UserGroups")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Expense", b =>
+                {
+                    b.Navigation("UserExpenses");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.Group", b =>
+                {
+                    b.Navigation("Expenses");
+
+                    b.Navigation("UserGroups");
+                });
+
+            modelBuilder.Entity("SplitwiseAPI.Models.User", b =>
+                {
+                    b.Navigation("UserExpenses");
+
+                    b.Navigation("UserGroups");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SplitwiseAPI.Models
+{
+    public class Expense
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ExpenseId { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string Description { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Amount { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string Password { get; set; }
+
+        // Foreign Key
+        [Required]
+        public int GroupId { get; set; }
+
+        // Navigation Properties
+        [ForeignKey("GroupId")]
+        public virtual Group Group { get; set; }
+
+        public virtual ICollection<UserExpense> UserExpenses { get; set; } = new List<UserExpense>();
+    }
+}﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SplitwiseAPI.Models
+{
+    public class Group
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int GroupId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        // Navigation Properties
+        public virtual ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
+        public virtual ICollection<Expense> Expenses { get; set; } = new List<Expense>();
+    }
+}﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SplitwiseAPI.Models
+{
+    public class User
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserId { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string Password { get; set; }
+
+        // Navigation Properties
+        public virtual ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
+        public virtual ICollection<UserExpense> UserExpenses { get; set; } = new List<UserExpense>();
+    }
+}﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SplitwiseAPI.Models
+{
+    public class UserExpense
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserExpenseId { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Amount { get; set; }
+
+        [Required]
+        public UserExpenseType Type { get; set; }
+
+        // Foreign Keys
+        [Required]
+        public int UserId { get; set; }
+
+        [Required]
+        public int ExpenseId { get; set; }
+
+        // Navigation Properties
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
+        [ForeignKey("ExpenseId")]
+        public virtual Expense Expense { get; set; }
+    }
+}﻿namespace SplitwiseAPI.Models
+{
+    public enum UserExpenseType
+    {
+        PAID_BY,
+        HEAD_TO_PAY
+    }
+}﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SplitwiseAPI.Models
+{
+    public class UserGroup
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int UserGroupId { get; set; }
+
+        // Foreign Keys
+        [Required]
+        public int UserId { get; set; }
+
+        [Required]
+        public int GroupId { get; set; }
+
+        // Navigation Properties
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+
+        [ForeignKey("GroupId")]
+        public virtual Group Group { get; set; }
+    }
+}
