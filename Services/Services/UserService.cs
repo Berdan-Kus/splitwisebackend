@@ -17,7 +17,6 @@ namespace SplitwiseAPI.Services.Services
             _userExpenseRepository = userExpenseRepository;
         }
 
-        // Basic CRUD operations
         public async Task<UserResponseDto?> GetUserByIdAsync(int id)
         {
             var user = await _userRepository.GetByIdAsync(id);
@@ -38,7 +37,6 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<UserResponseDto> CreateUserAsync(CreateUserDto createUserDto)
         {
-            // Validate phone uniqueness
             if (await _userRepository.PhoneExistsAsync(createUserDto.Phone))
             {
                 throw new InvalidOperationException("Phone number already exists");
@@ -60,7 +58,6 @@ namespace SplitwiseAPI.Services.Services
             var user = await _userRepository.GetByIdAsync(id);
             if (user == null) return null;
 
-            // Update only provided fields
             if (!string.IsNullOrEmpty(updateUserDto.Name))
                 user.Name = updateUserDto.Name;
 
@@ -85,7 +82,6 @@ namespace SplitwiseAPI.Services.Services
             return await _userRepository.DeleteAsync(id);
         }
 
-        // User validation
         public async Task<bool> UserExistsAsync(int id)
         {
             return await _userRepository.ExistsAsync(id);
@@ -102,7 +98,6 @@ namespace SplitwiseAPI.Services.Services
             return user != null && VerifyPassword(password, user.Password);
         }
 
-        // User relationships
         public async Task<IEnumerable<UserResponseDto>> GetUsersByGroupIdAsync(int groupId)
         {
             var users = await _userRepository.GetUsersByGroupIdAsync(groupId);
@@ -127,7 +122,6 @@ namespace SplitwiseAPI.Services.Services
             return user != null ? MapToResponseDtoWithFullDetails(user) : null;
         }
 
-        // User balance and debt operations
         public async Task<UserBalanceDto> GetUserBalanceAsync(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
@@ -135,7 +129,6 @@ namespace SplitwiseAPI.Services.Services
 
             try
             {
-                // Simplified version to avoid collection enumeration issues
                 var totalPaid = await _userRepository.GetUserTotalPaidAsync(userId);
                 var totalOwed = await _userRepository.GetUserTotalOwedAsync(userId);
                 var netBalance = totalPaid - totalOwed;
@@ -194,7 +187,6 @@ namespace SplitwiseAPI.Services.Services
             return await BuildDebtDetailsAsync(userId, balanceWithOthers.Where(b => b.Value > 0).ToDictionary(b => b.Key, b => b.Value));
         }
 
-        // Search operations
         public async Task<IEnumerable<UserResponseDto>> SearchUsersByNameAsync(string name)
         {
             var users = await _userRepository.SearchUsersByNameAsync(name);
@@ -207,7 +199,6 @@ namespace SplitwiseAPI.Services.Services
             return users.Select(MapToResponseDto);
         }
 
-        // User statistics
         public async Task<decimal> GetUserTotalPaidAsync(int userId)
         {
             return await _userRepository.GetUserTotalPaidAsync(userId);
@@ -229,7 +220,6 @@ namespace SplitwiseAPI.Services.Services
             return userGroups?.UserGroups?.Count ?? 0;
         }
 
-        // Private helper methods
         private static UserResponseDto MapToResponseDto(User user)
         {
             return new UserResponseDto
@@ -302,13 +292,11 @@ namespace SplitwiseAPI.Services.Services
 
         private static string HashPassword(string password)
         {
-            // In production, use BCrypt or similar
             return password; // Simplified for demo
         }
 
         private static bool VerifyPassword(string password, string hashedPassword)
         {
-            // In production, use proper password verification
             return password == hashedPassword; // Simplified for demo
         }
     }

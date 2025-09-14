@@ -24,13 +24,13 @@ namespace SplitwiseAPI.Services.Services
             _userRepository = userRepository;
         }
 
-        // Basic CRUD operations
+
         public async Task<ExpenseResponseDto?> GetExpenseByIdAsync(int id)
         {
             var expense = await _expenseRepository.GetByIdAsync(id);
             if (expense == null) return null;
 
-            // Simplified mapping without complex navigation
+
             var group = await _groupRepository.GetByIdAsync(expense.GroupId);
 
             return new ExpenseResponseDto
@@ -61,11 +61,11 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<ExpenseResponseDto> CreateExpenseAsync(CreateExpenseDto createExpenseDto)
         {
-            // Validate group exists
+
             if (!await _groupRepository.ExistsAsync(createExpenseDto.GroupId))
                 throw new ArgumentException("Group not found");
 
-            // Create expense
+
             var expense = new Expense
             {
                 Description = createExpenseDto.Description,
@@ -76,11 +76,11 @@ namespace SplitwiseAPI.Services.Services
 
             var createdExpense = await _expenseRepository.CreateAsync(expense);
 
-            // Create user expenses
+
             var userExpenses = new List<UserExpense>();
             foreach (var detail in createExpenseDto.ExpenseDetails)
             {
-                // Validate user exists and is in group
+
                 if (!await _userRepository.ExistsAsync(detail.UserId))
                     throw new ArgumentException($"User {detail.UserId} not found");
 
@@ -102,7 +102,7 @@ namespace SplitwiseAPI.Services.Services
 
             await _userExpenseRepository.CreateBulkAsync(userExpenses);
 
-            // Validate balance
+
             if (!await ValidateExpenseBalanceAsync(createdExpense.ExpenseId))
                 throw new InvalidOperationException("Expense amounts don't balance (total paid != total owed)");
 
@@ -114,7 +114,7 @@ namespace SplitwiseAPI.Services.Services
         {
             try
             {
-                // Validate group and payer
+
                 if (!await _groupRepository.ExistsAsync(simpleExpenseDto.GroupId))
                     throw new ArgumentException("Group not found");
 
@@ -124,7 +124,7 @@ namespace SplitwiseAPI.Services.Services
                 if (!await _groupRepository.IsUserInGroupAsync(simpleExpenseDto.GroupId, simpleExpenseDto.PayerUserId))
                     throw new ArgumentException("Payer is not in the group");
 
-                // Get participants (if not specified, use all group members)
+
                 var participantIds = new List<int>();
                 if (simpleExpenseDto.ParticipantUserIds != null && simpleExpenseDto.ParticipantUserIds.Any())
                 {
@@ -137,25 +137,25 @@ namespace SplitwiseAPI.Services.Services
                     participantIds.AddRange(memberIds);
                 }
 
-                // Create a snapshot of participant IDs to avoid enumeration issues
+
                 var participantIdsSnapshot = participantIds.ToList();
 
-                // Validate all participants are in group
+
                 foreach (var participantId in participantIdsSnapshot)
                 {
                     if (!await _groupRepository.IsUserInGroupAsync(simpleExpenseDto.GroupId, participantId))
                         throw new ArgumentException($"Participant {participantId} is not in the group");
                 }
 
-                // Calculate equal split amount
+
                 var participantCount = participantIdsSnapshot.Count;
                 var splitAmount = Math.Round(simpleExpenseDto.Amount / participantCount, 2);
                 var remainder = simpleExpenseDto.Amount - (splitAmount * participantCount);
 
-                // Create detailed expense DTO
+
                 var expenseDetails = new List<CreateExpenseDetailDto>();
 
-                // Add payer detail
+
                 expenseDetails.Add(new CreateExpenseDetailDto
                 {
                     UserId = simpleExpenseDto.PayerUserId,
@@ -163,11 +163,11 @@ namespace SplitwiseAPI.Services.Services
                     Type = "PAID_BY"
                 });
 
-                // Add participant details
+
                 for (int i = 0; i < participantCount; i++)
                 {
                     var amount = splitAmount;
-                    // Add remainder to first participant to balance
+
                     if (i == 0) amount += remainder;
 
                     expenseDetails.Add(new CreateExpenseDetailDto
@@ -200,7 +200,7 @@ namespace SplitwiseAPI.Services.Services
             var expense = await _expenseRepository.GetByIdAsync(id);
             if (expense == null) return null;
 
-            // Update expense fields
+
             if (!string.IsNullOrEmpty(updateExpenseDto.Description))
                 expense.Description = updateExpenseDto.Description;
 
@@ -212,13 +212,13 @@ namespace SplitwiseAPI.Services.Services
 
             await _expenseRepository.UpdateAsync(expense);
 
-            // Update expense details if provided
+
             if (updateExpenseDto.ExpenseDetails != null && updateExpenseDto.ExpenseDetails.Any())
             {
-                // Delete existing user expenses
+
                 await _userExpenseRepository.DeleteByExpenseIdAsync(id);
 
-                // Create new user expenses
+
                 var userExpenses = new List<UserExpense>();
                 foreach (var detail in updateExpenseDto.ExpenseDetails)
                 {
@@ -237,7 +237,7 @@ namespace SplitwiseAPI.Services.Services
 
                 await _userExpenseRepository.CreateBulkAsync(userExpenses);
 
-                // Validate balance after update
+
                 if (!await ValidateExpenseBalanceAsync(id))
                     throw new InvalidOperationException("Updated expense amounts don't balance");
             }
@@ -247,12 +247,12 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<bool> DeleteExpenseAsync(int id)
         {
-            // Delete related user expenses first
+
             await _userExpenseRepository.DeleteByExpenseIdAsync(id);
             return await _expenseRepository.DeleteAsync(id);
         }
 
-        // Expense validation
+
         public async Task<bool> ExpenseExistsAsync(int id)
         {
             return await _expenseRepository.ExistsAsync(id);
@@ -273,7 +273,7 @@ namespace SplitwiseAPI.Services.Services
             return await _expenseRepository.CanUserModifyExpenseAsync(expenseId, userId);
         }
 
-        // Expense details
+
         public async Task<ExpenseResponseDto?> GetExpenseWithDetailsAsync(int expenseId)
         {
             return await GetExpenseByIdAsync(expenseId);
@@ -289,7 +289,7 @@ namespace SplitwiseAPI.Services.Services
             return await GetExpenseByIdAsync(expenseId);
         }
 
-        // Group and user expenses
+
         public async Task<IEnumerable<ExpenseListDto>> GetExpensesByGroupIdAsync(int groupId)
         {
             var expenses = await _expenseRepository.GetExpensesByGroupIdAsync(groupId);
@@ -314,7 +314,7 @@ namespace SplitwiseAPI.Services.Services
             return await MapToExpenseListDtosAsync(expenses);
         }
 
-        // Expense calculations
+
         public async Task<ExpenseSummaryDto> GetExpenseSummaryAsync(int expenseId)
         {
             var totalPaid = await _expenseRepository.GetExpenseTotalPaidAsync(expenseId);
@@ -370,7 +370,7 @@ namespace SplitwiseAPI.Services.Services
             return await _expenseRepository.GetExpenseTotalToPayAsync(expenseId);
         }
 
-        // Expense business logic
+
         public async Task<bool> ValidateExpenseBalanceAsync(int expenseId)
         {
             return await _userExpenseRepository.ValidateUserExpenseBalanceAsync(expenseId);
@@ -378,16 +378,16 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<ExpenseResponseDto> RecalculateExpenseAsync(int expenseId)
         {
-            // This method could recalculate splits if business rules change
+
             var expense = await GetExpenseByIdAsync(expenseId);
             if (expense == null) throw new ArgumentException("Expense not found");
 
-            // For now, just return the expense as-is
-            // In a real implementation, you might recalculate splits based on updated rules
+
+
             return expense;
         }
 
-        // Search and filter operations
+
         public async Task<IEnumerable<ExpenseListDto>> SearchExpensesByDescriptionAsync(string description)
         {
             var expenses = await _expenseRepository.SearchExpensesByDescriptionAsync(description);
@@ -406,7 +406,7 @@ namespace SplitwiseAPI.Services.Services
             return await MapToExpenseListDtosAsync(expenses);
         }
 
-        // Statistics
+
         public async Task<decimal> GetTotalExpensesForUserAsync(int userId)
         {
             return await _expenseRepository.GetTotalExpensesForUserAsync(userId);
@@ -417,14 +417,14 @@ namespace SplitwiseAPI.Services.Services
             return await _expenseRepository.GetTotalExpensesForGroupAsync(groupId);
         }
 
-        // Expense management
+
         public async Task<bool> SettleExpenseAsync(int expenseId, string password)
         {
             if (!await ValidateExpensePasswordAsync(expenseId, password))
                 return false;
 
-            // Mark expense as settled (you might add a IsSettled field to Expense model)
-            // For now, we'll just validate the password
+
+
             return true;
         }
 
@@ -437,13 +437,13 @@ namespace SplitwiseAPI.Services.Services
             var splitAmount = Math.Round(expense.Amount / participants.Count, 2);
             var remainder = expense.Amount - (splitAmount * participants.Count);
 
-            // Delete existing user expenses
+
             await _userExpenseRepository.DeleteByExpenseIdAsync(expenseId);
 
-            // Create new equal split
+
             var userExpenses = new List<UserExpense>();
 
-            // Assume first participant paid the full amount
+
             userExpenses.Add(new UserExpense
             {
                 UserId = participants[0],
@@ -452,11 +452,11 @@ namespace SplitwiseAPI.Services.Services
                 Type = UserExpenseType.PAID_BY
             });
 
-            // Split equally among all participants
+
             for (int i = 0; i < participants.Count; i++)
             {
                 var amount = splitAmount;
-                // Add remainder to first participant to balance
+
                 if (i == 0) amount += remainder;
 
                 userExpenses.Add(new UserExpense
@@ -474,13 +474,13 @@ namespace SplitwiseAPI.Services.Services
                 ?? throw new InvalidOperationException("Failed to retrieve updated expense");
         }
 
-        // Private helper methods
+
         private async Task<ExpenseResponseDto> MapToResponseDtoAsync(Expense expense)
         {
-            // Safely get group information
+
             var group = await _groupRepository.GetByIdAsync(expense.GroupId);
 
-            // Safely get user expenses
+
             var userExpenses = await _userExpenseRepository.GetUserExpensesByExpenseIdAsync(expense.ExpenseId);
 
             var expenseDetails = new List<ExpenseDetailDto>();

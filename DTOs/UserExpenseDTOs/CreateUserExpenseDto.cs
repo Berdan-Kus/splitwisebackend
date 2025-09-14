@@ -19,7 +19,6 @@ namespace SplitwiseAPI.DTOs.UserExpenseDTOs
         public string Type { get; set; }
     }
 
-    // Toplu UserExpense oluşturma için
     public class CreateBulkUserExpenseDto
     {
         [Required(ErrorMessage = "Expense ID is required")]

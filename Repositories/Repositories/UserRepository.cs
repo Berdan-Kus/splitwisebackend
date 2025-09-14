@@ -14,7 +14,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             _context = context;
         }
 
-        // Basic CRUD operations
         public async Task<User?> GetByIdAsync(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
@@ -69,7 +68,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return await query.AnyAsync();
         }
 
-        // User-specific operations
         public async Task<IEnumerable<User>> GetUsersByGroupIdAsync(int groupId)
         {
             return await _context.Users
@@ -111,7 +109,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .FirstOrDefaultAsync(u => u.UserId == userId);
         }
 
-        // User balance and debt operations
         public async Task<decimal> GetUserTotalPaidAsync(int userId)
         {
             return await _context.UserExpenses
@@ -135,7 +132,6 @@ namespace SplitwiseAPI.Repositories.Repositories
 
         public async Task<IEnumerable<User>> GetUsersWithDebtToUserAsync(int creditorUserId)
         {
-            // Bu kullanıcıya borçlu olan diğer kullanıcıları bul
             var debtorIds = await _context.UserExpenses
                 .Include(ue => ue.Expense)
                 .Where(ue => ue.Expense.UserExpenses.Any(ue2 =>
@@ -150,7 +146,6 @@ namespace SplitwiseAPI.Repositories.Repositories
 
         public async Task<IEnumerable<User>> GetUsersUserOwesAsync(int debtorUserId)
         {
-            // Bu kullanıcının borçlu olduğu diğer kullanıcıları bul
             var creditorIds = await _context.UserExpenses
                 .Include(ue => ue.Expense)
                 .Where(ue => ue.UserId == debtorUserId && ue.Type == UserExpenseType.HEAD_TO_PAY)
@@ -163,7 +158,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return await GetUsersByIdsAsync(creditorIds);
         }
 
-        // Search operations
         public async Task<IEnumerable<User>> SearchUsersByNameAsync(string name)
         {
             return await _context.Users

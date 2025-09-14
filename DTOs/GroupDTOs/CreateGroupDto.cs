@@ -8,7 +8,6 @@ namespace SplitwiseAPI.DTOs.GroupDTOs
         [StringLength(100, ErrorMessage = "Group name cannot exceed 100 characters")]
         public string Name { get; set; }
 
-        // Grup oluştururken hangi kullanıcıları ekleyeceğimiz (opsiyonel)
         public List<int>? MemberUserIds { get; set; }
     }
 }

@@ -16,10 +16,6 @@ namespace SplitwiseAPI.Controllers
             _expenseService = expenseService;
         }
 
-        /// <summary>
-        /// Get all expenses (for admin, general listing)
-        /// </summary>
-        /// <returns>List of all expenses</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ExpenseListDto>), 200)]
         public async Task<ActionResult<IEnumerable<ExpenseListDto>>> GetAllExpenses()
@@ -28,11 +24,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(expenses);
         }
 
-        /// <summary>
-        /// Create a simple expense with equal split (core feature)
-        /// </summary>
-        /// <param name="simpleExpenseDto">Simple expense creation data</param>
-        /// <returns>Created expense</returns>
         [HttpPost("simple")]
         [ProducesResponseType(typeof(ExpenseResponseDto), 201)]
         [ProducesResponseType(400)]
@@ -53,11 +44,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get expense by ID
-        /// </summary>
-        /// <param name="id">Expense ID</param>
-        /// <returns>Expense details</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ExpenseResponseDto), 200)]
         [ProducesResponseType(404)]
@@ -70,11 +56,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(expense);
         }
 
-        /// <summary>
-        /// Delete an expense (for error correction)
-        /// </summary>
-        /// <param name="id">Expense ID</param>
-        /// <returns>Success status</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
@@ -87,11 +68,6 @@ namespace SplitwiseAPI.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Get expenses by group
-        /// </summary>
-        /// <param name="groupId">Group ID</param>
-        /// <returns>Group expenses</returns>
         [HttpGet("group/{groupId}")]
         [ProducesResponseType(typeof(IEnumerable<ExpenseListDto>), 200)]
         public async Task<ActionResult<IEnumerable<ExpenseListDto>>> GetExpensesByGroup(int groupId)
@@ -100,11 +76,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(expenses);
         }
 
-        /// <summary>
-        /// Get expenses by user
-        /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <returns>User expenses</returns>
         [HttpGet("user/{userId}")]
         [ProducesResponseType(typeof(IEnumerable<ExpenseListDto>), 200)]
         public async Task<ActionResult<IEnumerable<ExpenseListDto>>> GetExpensesByUser(int userId)

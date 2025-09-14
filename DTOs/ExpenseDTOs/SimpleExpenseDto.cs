@@ -2,7 +2,6 @@
 
 namespace SplitwiseAPI.DTOs.ExpenseDTOs
 {
-    // Basit masraf oluşturma - eşit bölüştürme için
     public class SimpleExpenseDto
     {
         [Required(ErrorMessage = "Description is required")]
@@ -23,11 +22,9 @@ namespace SplitwiseAPI.DTOs.ExpenseDTOs
         [Required(ErrorMessage = "Payer user ID is required")]
         public int PayerUserId { get; set; }
 
-        // Masrafı paylaşacak kullanıcılar (boş ise grup üyelerinin tümü)
         public List<int>? ParticipantUserIds { get; set; }
     }
 
-    // Masraf listesi için basit DTO
     public class ExpenseListDto
     {
         public int ExpenseId { get; set; }

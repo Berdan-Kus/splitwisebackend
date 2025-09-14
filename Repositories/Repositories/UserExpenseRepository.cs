@@ -14,7 +14,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             _context = context;
         }
 
-        // Basic CRUD operations
         public async Task<UserExpense?> GetByIdAsync(int id)
         {
             return await _context.UserExpenses.FirstOrDefaultAsync(ue => ue.UserExpenseId == id);
@@ -58,7 +57,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return await _context.UserExpenses.AnyAsync(ue => ue.UserExpenseId == id);
         }
 
-        // UserExpense-specific operations
         public async Task<UserExpense?> GetUserExpenseWithDetailsAsync(int id)
         {
             return await _context.UserExpenses
@@ -94,7 +92,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .FirstOrDefaultAsync(ue => ue.UserId == userId && ue.ExpenseId == expenseId && ue.Type == type);
         }
 
-        // Bulk operations
         public async Task<IEnumerable<UserExpense>> CreateBulkAsync(IEnumerable<UserExpense> userExpenses)
         {
             _context.UserExpenses.AddRange(userExpenses);
@@ -128,7 +125,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return true;
         }
 
-        // Balance calculations
         public async Task<decimal> GetUserTotalPaidAsync(int userId)
         {
             return await _context.UserExpenses
@@ -165,10 +161,8 @@ namespace SplitwiseAPI.Repositories.Repositories
             return totalPaid - totalOwed;
         }
 
-        // Debt calculations
         public async Task<IEnumerable<(int UserId, decimal Amount)>> GetUserCreditsAsync(int userId)
         {
-            // Bu kullanıcının alacaklı olduğu diğer kullanıcılar
             var expenseIds = await _context.UserExpenses
                 .Where(ue => ue.UserId == userId && ue.Type == UserExpenseType.PAID_BY)
                 .Select(ue => ue.ExpenseId)
@@ -187,7 +181,6 @@ namespace SplitwiseAPI.Repositories.Repositories
 
         public async Task<IEnumerable<(int UserId, decimal Amount)>> GetUserDebtsAsync(int userId)
         {
-            // Bu kullanıcının borçlu olduğu diğer kullanıcılar
             var expenseIds = await _context.UserExpenses
                 .Where(ue => ue.UserId == userId && ue.Type == UserExpenseType.HEAD_TO_PAY)
                 .Select(ue => ue.ExpenseId)
@@ -208,7 +201,6 @@ namespace SplitwiseAPI.Repositories.Repositories
         {
             var balances = new Dictionary<int, decimal>();
 
-            // Kullanıcının katıldığı tüm masrafları al
             var userExpenses = await _context.UserExpenses
                 .Include(ue => ue.Expense)
                     .ThenInclude(e => e.UserExpenses)
@@ -228,12 +220,10 @@ namespace SplitwiseAPI.Repositories.Repositories
                         balances[otherUserExpense.UserId] = 0;
                     }
 
-                    // Eğer bu kullanıcı ödediyse, diğer kullanıcı borçlu
                     if (userExpense.Type == UserExpenseType.PAID_BY && otherUserExpense.Type == UserExpenseType.HEAD_TO_PAY)
                     {
                         balances[otherUserExpense.UserId] += otherUserExpense.Amount;
                     }
-                    // Eğer diğer kullanıcı ödediyse, bu kullanıcı borçlu
                     else if (userExpense.Type == UserExpenseType.HEAD_TO_PAY && otherUserExpense.Type == UserExpenseType.PAID_BY)
                     {
                         balances[otherUserExpense.UserId] -= userExpense.Amount;
@@ -244,7 +234,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return balances;
         }
 
-        // Group-based calculations
         public async Task<Dictionary<int, decimal>> GetGroupMemberBalancesAsync(int groupId)
         {
             var groupUsers = await _context.Users
@@ -283,7 +272,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                     debts.Add((debtor.Key, creditor.Key, Math.Round(paymentAmount, 2)));
 
                     remainingDebt -= paymentAmount;
-                    // Update creditor balance
                     var creditorIndex = creditors.FindIndex(c => c.Key == creditor.Key);
                     creditors[creditorIndex] = new KeyValuePair<int, decimal>(creditor.Key, creditor.Value - paymentAmount);
                 }
@@ -294,11 +282,9 @@ namespace SplitwiseAPI.Repositories.Repositories
 
         public async Task<IEnumerable<(int DebtorId, int CreditorId, decimal Amount)>> GetSimplifiedGroupDebtsAsync(int groupId)
         {
-            // Bu method, minimum transfer sayısı ile borçları hesaplar
             return await GetGroupDebtsAsync(groupId);
         }
 
-        // Expense-based operations
         public async Task<IEnumerable<UserExpense>> GetPaidByUserExpensesAsync(int expenseId)
         {
             return await _context.UserExpenses
@@ -329,14 +315,12 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .SumAsync(ue => ue.Amount);
         }
 
-        // Statistics and reporting
         public async Task<IEnumerable<UserExpense>> GetUserExpensesByDateRangeAsync(int userId, DateTime startDate, DateTime endDate)
         {
             return await _context.UserExpenses
                 .Include(ue => ue.Expense)
                     .ThenInclude(e => e.Group)
                 .Where(ue => ue.UserId == userId)
-                // If you add CreatedDate to UserExpense, use it here
                 .OrderByDescending(ue => ue.UserExpenseId)
                 .ToListAsync();
         }
@@ -345,7 +329,6 @@ namespace SplitwiseAPI.Repositories.Repositories
         {
             return await _context.UserExpenses
                 .Where(ue => ue.UserId == userId && ue.Type == UserExpenseType.PAID_BY)
-                // Add date filtering when CreatedDate is available
                 .SumAsync(ue => ue.Amount);
         }
 
@@ -353,17 +336,14 @@ namespace SplitwiseAPI.Repositories.Repositories
         {
             return await _context.UserExpenses
                 .Where(ue => ue.UserId == userId && ue.Type == UserExpenseType.HEAD_TO_PAY)
-                // Add date filtering when CreatedDate is available
                 .SumAsync(ue => ue.Amount);
         }
 
-        // Validation operations
         public async Task<bool> ValidateUserExpenseBalanceAsync(int expenseId)
         {
             var totalPaid = await GetExpenseTotalPaidAsync(expenseId);
             var totalOwed = await GetExpenseTotalOwedAsync(expenseId);
 
-            // Tolerance for decimal precision
             return Math.Abs(totalPaid - totalOwed) < 0.01m;
         }
 

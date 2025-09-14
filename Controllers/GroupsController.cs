@@ -17,10 +17,6 @@ namespace SplitwiseAPI.Controllers
             _groupService = groupService;
         }
 
-        /// <summary>
-        /// Get all groups (for dropdowns, group selection)
-        /// </summary>
-        /// <returns>List of all groups</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<GroupResponseDto>), 200)]
         public async Task<ActionResult<IEnumerable<GroupResponseDto>>> GetAllGroups()
@@ -29,11 +25,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(groups);
         }
 
-        /// <summary>
-        /// Create a new group
-        /// </summary>
-        /// <param name="createGroupDto">Group creation data</param>
-        /// <returns>Created group</returns>
         [HttpPost]
         [ProducesResponseType(typeof(GroupResponseDto), 201)]
         [ProducesResponseType(400)]
@@ -43,11 +34,6 @@ namespace SplitwiseAPI.Controllers
             return CreatedAtAction(nameof(GetGroup), new { id = group.GroupId }, group);
         }
 
-        /// <summary>
-        /// Get group by ID
-        /// </summary>
-        /// <param name="id">Group ID</param>
-        /// <returns>Group details</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(GroupResponseDto), 200)]
         [ProducesResponseType(404)]
@@ -60,11 +46,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(group);
         }
 
-        /// <summary>
-        /// Get group members list
-        /// </summary>
-        /// <param name="id">Group ID</param>
-        /// <returns>List of group members</returns>
         [HttpGet("{id}/members")]
         [ProducesResponseType(typeof(IEnumerable<GroupMemberDto>), 200)]
         [ProducesResponseType(404)]
@@ -77,12 +58,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(members);
         }
 
-        /// <summary>
-        /// Add user to group
-        /// </summary>
-        /// <param name="id">Group ID</param>
-        /// <param name="userId">User ID to add</param>
-        /// <returns>Success status</returns>
         [HttpPost("{id}/members/{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -103,12 +78,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Remove user from group
-        /// </summary>
-        /// <param name="id">Group ID</param>
-        /// <param name="userId">User ID to remove</param>
-        /// <returns>Success status</returns>
         [HttpDelete("{id}/members/{userId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -129,11 +98,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get group balance summary (core feature)
-        /// </summary>
-        /// <param name="id">Group ID</param>
-        /// <returns>Group balance summary</returns>
         [HttpGet("{id}/balance")]
         [ProducesResponseType(typeof(GroupBalanceSummaryDto), 200)]
         [ProducesResponseType(404)]
@@ -150,11 +114,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get groups by user ID
-        /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <returns>User's groups</returns>
         [HttpGet("user/{userId}")]
         [ProducesResponseType(typeof(IEnumerable<GroupResponseDto>), 200)]
         public async Task<ActionResult<IEnumerable<GroupResponseDto>>> GetGroupsByUserId(int userId)

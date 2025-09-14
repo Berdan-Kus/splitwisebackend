@@ -14,7 +14,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             _context = context;
         }
 
-        // Basic CRUD operations
         public async Task<Expense?> GetByIdAsync(int id)
         {
             return await _context.Expenses.FirstOrDefaultAsync(e => e.ExpenseId == id);
@@ -57,7 +56,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return await _context.Expenses.AnyAsync(e => e.ExpenseId == id);
         }
 
-        // Expense-specific operations
         public async Task<Expense?> GetExpenseWithDetailsAsync(int expenseId)
         {
             return await _context.Expenses
@@ -86,7 +84,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .FirstOrDefaultAsync(e => e.ExpenseId == expenseId);
         }
 
-        // Group expense operations
         public async Task<IEnumerable<Expense>> GetExpensesByGroupIdAsync(int groupId)
         {
             return await _context.Expenses
@@ -119,7 +116,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .ToListAsync();
         }
 
-        // Expense validation
         public async Task<bool> ValidateExpensePasswordAsync(int expenseId, string password)
         {
             var expense = await GetByIdAsync(expenseId);
@@ -137,12 +133,10 @@ namespace SplitwiseAPI.Repositories.Repositories
 
         public async Task<bool> CanUserModifyExpenseAsync(int expenseId, int userId)
         {
-            // Kullanıcı masrafı ödediyse veya paylaştığı masraf ise değiştirebilir
             return await _context.UserExpenses
                 .AnyAsync(ue => ue.ExpenseId == expenseId && ue.UserId == userId);
         }
 
-        // Expense calculations
         public async Task<decimal> GetExpenseTotalPaidAsync(int expenseId)
         {
             return await _context.UserExpenses
@@ -206,7 +200,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                     debts.Add((debtor.Key, creditor.Key, paymentAmount));
 
                     remainingDebt -= paymentAmount;
-                    // Update creditor balance in the list
                     var creditorIndex = creditors.FindIndex(c => c.Key == creditor.Key);
                     creditors[creditorIndex] = new KeyValuePair<int, decimal>(creditor.Key, creditor.Value - paymentAmount);
                 }
@@ -215,7 +208,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return debts;
         }
 
-        // Statistics
         public async Task<decimal> GetTotalExpensesForUserAsync(int userId)
         {
             return await _context.UserExpenses
@@ -253,7 +245,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .ToListAsync();
         }
 
-        // Search operations
         public async Task<IEnumerable<Expense>> SearchExpensesByDescriptionAsync(string description)
         {
             return await _context.Expenses

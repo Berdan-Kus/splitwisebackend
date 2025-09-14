@@ -16,14 +16,12 @@ namespace SplitwiseAPI.Models
         [Required]
         public UserExpenseType Type { get; set; }
 
-        // Foreign Keys
         [Required]
         public int UserId { get; set; }
 
         [Required]
         public int ExpenseId { get; set; }
 
-        // Navigation Properties
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 

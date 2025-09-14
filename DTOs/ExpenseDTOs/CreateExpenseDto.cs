@@ -19,7 +19,6 @@ namespace SplitwiseAPI.DTOs.ExpenseDTOs
         [Required(ErrorMessage = "Group ID is required")]
         public int GroupId { get; set; }
 
-        // Masraf detayları - kim ne kadar ödedi, kimler paylaşacak
         [Required(ErrorMessage = "Expense details are required")]
         [MinLength(1, ErrorMessage = "At least one expense detail is required")]
         public List<CreateExpenseDetailDto> ExpenseDetails { get; set; }
@@ -35,6 +34,6 @@ namespace SplitwiseAPI.DTOs.ExpenseDTOs
         public decimal Amount { get; set; }
 
         [Required(ErrorMessage = "Expense type is required")]
-        public string Type { get; set; } // "PAID_BY" veya "HEAD_TO_PAY"
+        public string Type { get; set; }
     }
 }

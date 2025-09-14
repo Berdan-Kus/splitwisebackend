@@ -13,7 +13,6 @@ namespace SplitwiseAPI.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        // Navigation Properties
         public virtual ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
         public virtual ICollection<Expense> Expenses { get; set; } = new List<Expense>();
     }

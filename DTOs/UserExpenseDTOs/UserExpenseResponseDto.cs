@@ -4,12 +4,10 @@
     {
         public int UserExpenseId { get; set; }
         public decimal Amount { get; set; }
-        public string Type { get; set; } // "PAID_BY" veya "HEAD_TO_PAY"
+        public string Type { get; set; }
 
-        // User bilgisi
         public UserExpenseUserDto User { get; set; }
 
-        // Expense bilgisi
         public UserExpenseExpenseDto Expense { get; set; }
     }
 
@@ -28,16 +26,14 @@
         public string GroupName { get; set; }
     }
 
-    // Kullanıcı bakiye özeti
     public class UserBalanceDto
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
         public decimal TotalPaid { get; set; }
         public decimal TotalOwed { get; set; }
-        public decimal NetBalance { get; set; } // Pozitif: alacaklı, Negatif: borçlu
+        public decimal NetBalance { get; set; }
 
-        // Detaylı borç/alacak listesi
         public List<UserDebtDetailDto> DebtDetails { get; set; }
     }
 
@@ -46,7 +42,7 @@
         public int OtherUserId { get; set; }
         public string OtherUserName { get; set; }
         public decimal Amount { get; set; }
-        public string Type { get; set; } // "OWE" (borçlusun) veya "OWED" (alacaklısın)
+        public string Type { get; set; }
         public List<DebtExpenseDto> RelatedExpenses { get; set; }
     }
 

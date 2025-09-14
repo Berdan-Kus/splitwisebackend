@@ -13,7 +13,6 @@ namespace SplitwiseAPI.DTOs.ExpenseDTOs
         [StringLength(255, ErrorMessage = "Password cannot exceed 255 characters")]
         public string? Password { get; set; }
 
-        // Masraf detaylarını güncellemek için
         public List<UpdateExpenseDetailDto>? ExpenseDetails { get; set; }
     }
 
@@ -26,6 +25,6 @@ namespace SplitwiseAPI.DTOs.ExpenseDTOs
         public decimal? Amount { get; set; }
 
         [Required(ErrorMessage = "Expense type is required")]
-        public string Type { get; set; } // "PAID_BY" veya "HEAD_TO_PAY"
+        public string Type { get; set; }
     }
 }

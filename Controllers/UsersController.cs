@@ -17,10 +17,6 @@ namespace SplitwiseAPI.Controllers
             _userService = userService;
         }
 
-        /// <summary>
-        /// Get all users (for dropdowns, member selection)
-        /// </summary>
-        /// <returns>List of all users</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<UserResponseDto>), 200)]
         public async Task<ActionResult<IEnumerable<UserResponseDto>>> GetAllUsers()
@@ -29,11 +25,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(users);
         }
 
-        /// <summary>
-        /// Create a new user
-        /// </summary>
-        /// <param name="createUserDto">User creation data</param>
-        /// <returns>Created user</returns>
         [HttpPost]
         [ProducesResponseType(typeof(UserResponseDto), 201)]
         [ProducesResponseType(400)]
@@ -50,11 +41,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get user by ID
-        /// </summary>
-        /// <param name="id">User ID</param>
-        /// <returns>User details</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(UserResponseDto), 200)]
         [ProducesResponseType(404)]
@@ -67,12 +53,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(user);
         }
 
-        /// <summary>
-        /// Update user information
-        /// </summary>
-        /// <param name="id">User ID</param>
-        /// <param name="updateUserDto">User update data</param>
-        /// <returns>Updated user</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(UserResponseDto), 200)]
         [ProducesResponseType(400)]
@@ -93,11 +73,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get user balance (core feature)
-        /// </summary>
-        /// <param name="id">User ID</param>
-        /// <returns>User balance information</returns>
         [HttpGet("{id}/balance")]
         [ProducesResponseType(typeof(UserBalanceDto), 200)]
         [ProducesResponseType(404)]
@@ -114,11 +89,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get user dashboard (core feature)
-        /// </summary>
-        /// <param name="id">User ID</param>
-        /// <returns>User dashboard data</returns>
         [HttpGet("{id}/dashboard")]
         [ProducesResponseType(typeof(UserDashboardDto), 200)]
         [ProducesResponseType(404)]
@@ -135,11 +105,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Search users by phone number
-        /// </summary>
-        /// <param name="phone">Phone number</param>
-        /// <returns>User details</returns>
         [HttpGet("search/phone/{phone}")]
         [ProducesResponseType(typeof(UserResponseDto), 200)]
         [ProducesResponseType(404)]
@@ -152,12 +117,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(user);
         }
 
-        /// <summary>
-        /// Check if phone number exists (for registration validation)
-        /// </summary>
-        /// <param name="phone">Phone number</param>
-        /// <param name="excludeUserId">User ID to exclude from check</param>
-        /// <returns>Existence status</returns>
         [HttpGet("phone-exists/{phone}")]
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<ActionResult<bool>> CheckPhoneExists(string phone, [FromQuery] int? excludeUserId = null)
@@ -166,11 +125,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(exists);
         }
 
-        /// <summary>
-        /// Validate user credentials (for login)
-        /// </summary>
-        /// <param name="validateCredentialsDto">Credentials to validate</param>
-        /// <returns>Validation result</returns>
         [HttpPost("validate")]
         [ProducesResponseType(typeof(bool), 200)]
         public async Task<ActionResult<bool>> ValidateCredentials([FromBody] ValidateCredentialsDto validateCredentialsDto)
@@ -180,7 +134,6 @@ namespace SplitwiseAPI.Controllers
         }
     }
 
-    // Additional DTOs for controller endpoints
     public class ValidateCredentialsDto
     {
         public string Phone { get; set; } = string.Empty;

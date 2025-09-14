@@ -21,11 +21,9 @@ namespace SplitwiseAPI.Models
         [StringLength(255)]
         public string Password { get; set; }
 
-        // Foreign Key
         [Required]
         public int GroupId { get; set; }
 
-        // Navigation Properties
         [ForeignKey("GroupId")]
         public virtual Group Group { get; set; }
 

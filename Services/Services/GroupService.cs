@@ -19,7 +19,7 @@ namespace SplitwiseAPI.Services.Services
             _userExpenseRepository = userExpenseRepository;
         }
 
-        // Basic CRUD operations
+
         public async Task<GroupResponseDto?> GetGroupByIdAsync(int id)
         {
             var group = await _groupRepository.GetByIdAsync(id);
@@ -48,7 +48,7 @@ namespace SplitwiseAPI.Services.Services
 
             var createdGroup = await _groupRepository.CreateAsync(group);
 
-            // Add initial members if provided
+
             if (createGroupDto.MemberUserIds != null && createGroupDto.MemberUserIds.Any())
             {
                 foreach (var userId in createGroupDto.MemberUserIds)
@@ -85,7 +85,7 @@ namespace SplitwiseAPI.Services.Services
             return await _groupRepository.DeleteAsync(id);
         }
 
-        // Group validation
+
         public async Task<bool> GroupExistsAsync(int id)
         {
             return await _groupRepository.ExistsAsync(id);
@@ -101,7 +101,7 @@ namespace SplitwiseAPI.Services.Services
             return await IsUserInGroupAsync(groupId, userId);
         }
 
-        // Group member management
+
         public async Task<bool> AddUserToGroupAsync(int groupId, int userId)
         {
             if (!await _groupRepository.ExistsAsync(groupId))
@@ -115,7 +115,7 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<bool> RemoveUserFromGroupAsync(int groupId, int userId)
         {
-            // Check if user has pending debts in this group
+
             var userBalance = await _userExpenseRepository.GetUserBalanceInGroupAsync(userId, groupId);
             if (Math.Abs(userBalance) > 0.01m)
             {
@@ -172,7 +172,7 @@ namespace SplitwiseAPI.Services.Services
             return members.Select(MapToGroupMemberDto);
         }
 
-        // Group details with navigation properties
+
         public async Task<GroupResponseDto?> GetGroupWithMembersAsync(int groupId)
         {
             var group = await _groupRepository.GetGroupWithMembersAsync(groupId);
@@ -191,7 +191,7 @@ namespace SplitwiseAPI.Services.Services
             return group != null ? await MapToResponseDtoWithFullDetailsAsync(group) : null;
         }
 
-        // User's groups
+
         public async Task<IEnumerable<GroupResponseDto>> GetGroupsByUserIdAsync(int userId)
         {
             var groups = await _groupRepository.GetGroupsByUserIdAsync(userId);
@@ -218,7 +218,7 @@ namespace SplitwiseAPI.Services.Services
             return groupDtos;
         }
 
-        // Group financial operations
+
         public async Task<GroupBalanceSummaryDto> GetGroupBalanceSummaryAsync(int groupId)
         {
             try
@@ -226,7 +226,7 @@ namespace SplitwiseAPI.Services.Services
                 var group = await _groupRepository.GetByIdAsync(groupId);
                 if (group == null) throw new ArgumentException("Group not found");
 
-                // Ultra-simplified version - no complex queries
+
                 return new GroupBalanceSummaryDto
                 {
                     GroupId = groupId,
@@ -238,7 +238,7 @@ namespace SplitwiseAPI.Services.Services
             }
             catch (Exception ex)
             {
-                // Return safe fallback
+
                 return new GroupBalanceSummaryDto
                 {
                     GroupId = groupId,
@@ -286,7 +286,7 @@ namespace SplitwiseAPI.Services.Services
             return await _groupRepository.HasActiveDebtsAsync(groupId);
         }
 
-        // Group statistics
+
         public async Task<int> GetGroupMemberCountAsync(int groupId)
         {
             return await _groupRepository.GetGroupMemberCountAsync(groupId);
@@ -302,7 +302,7 @@ namespace SplitwiseAPI.Services.Services
             return await _groupRepository.GetGroupMemberBalancesAsync(groupId);
         }
 
-        // Search operations
+
         public async Task<IEnumerable<GroupResponseDto>> SearchGroupsByNameAsync(string name)
         {
             var groups = await _groupRepository.SearchGroupsByNameAsync(name);
@@ -316,7 +316,7 @@ namespace SplitwiseAPI.Services.Services
             return groupDtos;
         }
 
-        // Group validation for operations
+
         public async Task<bool> ValidateGroupMembershipAsync(int groupId, IEnumerable<int> userIds)
         {
             foreach (var userId in userIds)
@@ -332,7 +332,7 @@ namespace SplitwiseAPI.Services.Services
             return !await HasGroupActiveDebtsAsync(groupId);
         }
 
-        // Private helper methods
+
         private async Task<GroupResponseDto> MapToResponseDtoAsync(Group group)
         {
             var memberCount = await _groupRepository.GetGroupMemberCountAsync(group.GroupId);

@@ -21,7 +21,6 @@ namespace SplitwiseAPI.Models
         [StringLength(255)]
         public string Password { get; set; }
 
-        // Navigation Properties
         public virtual ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
         public virtual ICollection<UserExpense> UserExpenses { get; set; } = new List<UserExpense>();
     }

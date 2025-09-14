@@ -14,7 +14,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             _context = context;
         }
 
-        // Basic CRUD operations
         public async Task<Group?> GetByIdAsync(int id)
         {
             return await _context.Groups.FirstOrDefaultAsync(g => g.GroupId == id);
@@ -54,7 +53,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return await _context.Groups.AnyAsync(g => g.GroupId == id);
         }
 
-        // Group-specific operations
         public async Task<Group?> GetGroupWithMembersAsync(int groupId)
         {
             return await _context.Groups
@@ -89,7 +87,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .ToListAsync();
         }
 
-        // Group member operations
         public async Task<bool> AddUserToGroupAsync(int groupId, int userId)
         {
             var existingUserGroup = await _context.UserGroups
@@ -140,7 +137,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .CountAsync(ug => ug.GroupId == groupId);
         }
 
-        // Group expense operations
         public async Task<decimal> GetGroupTotalExpensesAsync(int groupId)
         {
             return await _context.Expenses
@@ -164,7 +160,6 @@ namespace SplitwiseAPI.Repositories.Repositories
                 .CountAsync(e => e.GroupId == groupId);
         }
 
-        // Group balance operations
         public async Task<Dictionary<int, decimal>> GetGroupMemberBalancesAsync(int groupId)
         {
             var balances = new Dictionary<int, decimal>();
@@ -199,7 +194,6 @@ namespace SplitwiseAPI.Repositories.Repositories
             return balances.Values.Any(balance => Math.Abs(balance) > 0.01m);
         }
 
-        // Search operations
         public async Task<IEnumerable<Group>> SearchGroupsByNameAsync(string name)
         {
             return await _context.Groups

@@ -5,15 +5,11 @@
         public int ExpenseId { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
-        // Password'u response'a dahil etmiyoruz
 
-        // Grup bilgisi
         public ExpenseGroupDto Group { get; set; }
 
-        // Masraf detayları
         public List<ExpenseDetailDto> ExpenseDetails { get; set; }
 
-        // Hesaplanmış bilgiler
         public ExpenseSummaryDto Summary { get; set; }
     }
 
@@ -28,7 +24,7 @@
         public int UserId { get; set; }
         public string UserName { get; set; }
         public decimal Amount { get; set; }
-        public string Type { get; set; } // "PAID_BY" veya "HEAD_TO_PAY"
+        public string Type { get; set; }
     }
 
     public class ExpenseSummaryDto
@@ -38,7 +34,6 @@
         public List<DebtDto> Debts { get; set; }
     }
 
-    // Borç hesaplaması
     public class DebtDto
     {
         public int DebtorUserId { get; set; }

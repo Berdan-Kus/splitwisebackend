@@ -16,11 +16,6 @@ namespace SplitwiseAPI.Controllers
             _userExpenseService = userExpenseService;
         }
 
-        /// <summary>
-        /// Settle debt between users (core feature)
-        /// </summary>
-        /// <param name="settleDebtDto">Debt settlement data</param>
-        /// <returns>Settlement result</returns>
         [HttpPost("settle-debt")]
         [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
@@ -41,11 +36,6 @@ namespace SplitwiseAPI.Controllers
             }
         }
 
-        /// <summary>
-        /// Get simplified group debts
-        /// </summary>
-        /// <param name="groupId">Group ID</param>
-        /// <returns>Simplified group debts</returns>
         [HttpGet("group/{groupId}/debts")]
         [ProducesResponseType(typeof(IEnumerable<SimplifiedDebtDto>), 200)]
         public async Task<ActionResult<IEnumerable<SimplifiedDebtDto>>> GetSimplifiedGroupDebts(int groupId)
@@ -54,11 +44,6 @@ namespace SplitwiseAPI.Controllers
             return Ok(debts);
         }
 
-        /// <summary>
-        /// Get user debt details
-        /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <returns>User debt details</returns>
         [HttpGet("user/{userId}/debts")]
         [ProducesResponseType(typeof(IEnumerable<UserDebtDetailDto>), 200)]
         public async Task<ActionResult<IEnumerable<UserDebtDetailDto>>> GetUserDebtDetails(int userId)

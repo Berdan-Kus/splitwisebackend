@@ -24,7 +24,7 @@ namespace SplitwiseAPI.Services.Services
             _groupRepository = groupRepository;
         }
 
-        // Basic CRUD operations
+
         public async Task<UserExpenseResponseDto?> GetUserExpenseByIdAsync(int id)
         {
             var userExpense = await _userExpenseRepository.GetUserExpenseWithDetailsAsync(id);
@@ -39,7 +39,7 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<UserExpenseResponseDto> CreateUserExpenseAsync(CreateUserExpenseDto createUserExpenseDto)
         {
-            // Validate user and expense exist
+
             if (!await _userRepository.ExistsAsync(createUserExpenseDto.UserId))
                 throw new ArgumentException("User not found");
 
@@ -114,7 +114,7 @@ namespace SplitwiseAPI.Services.Services
             return await _userExpenseRepository.DeleteAsync(id);
         }
 
-        // UserExpense queries
+
         public async Task<IEnumerable<UserExpenseResponseDto>> GetUserExpensesByExpenseIdAsync(int expenseId)
         {
             var userExpenses = await _userExpenseRepository.GetUserExpensesByExpenseIdAsync(expenseId);
@@ -137,7 +137,7 @@ namespace SplitwiseAPI.Services.Services
             return userExpense != null ? MapToResponseDto(userExpense) : null;
         }
 
-        // Balance operations
+
         public async Task<UserBalanceDto> GetUserBalanceAsync(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
@@ -221,7 +221,7 @@ namespace SplitwiseAPI.Services.Services
             };
         }
 
-        // Debt operations - FIXED
+
         public async Task<IEnumerable<UserDebtDetailDto>> GetUserDebtDetailsAsync(int userId)
         {
             try
@@ -249,7 +249,7 @@ namespace SplitwiseAPI.Services.Services
             }
             catch (Exception ex)
             {
-                // Log the exception and return empty list for safety
+
                 return new List<UserDebtDetailDto>();
             }
         }
@@ -283,7 +283,7 @@ namespace SplitwiseAPI.Services.Services
             }
             catch (Exception ex)
             {
-                // Log the exception and return empty list for safety
+
                 return new List<SimplifiedDebtDto>();
             }
         }
@@ -293,7 +293,7 @@ namespace SplitwiseAPI.Services.Services
             return await _userExpenseRepository.GetUserBalanceWithOthersAsync(userId);
         }
 
-        // Settlement operations - FIXED
+
         public async Task<bool> SettleDebtAsync(SettleDebtDto settleDebtDto)
         {
             return await SettlePartialDebtAsync(
@@ -305,14 +305,14 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<bool> SettlePartialDebtAsync(int debtorUserId, int creditorUserId, decimal amount, string? note = null)
         {
-            // Validate users exist
+
             if (!await _userRepository.ExistsAsync(debtorUserId))
                 throw new ArgumentException("Debtor user not found");
 
             if (!await _userRepository.ExistsAsync(creditorUserId))
                 throw new ArgumentException("Creditor user not found");
 
-            // Validate debt exists
+
             var balances = await _userExpenseRepository.GetUserBalanceWithOthersAsync(debtorUserId);
             if (!balances.ContainsKey(creditorUserId) || balances[creditorUserId] >= 0)
                 throw new InvalidOperationException("No debt found between these users");
@@ -321,7 +321,7 @@ namespace SplitwiseAPI.Services.Services
             if (amount > currentDebt)
                 throw new InvalidOperationException("Settlement amount exceeds current debt");
 
-            // Create a virtual "settlement expense" to record the payment
+
             var settlementExpense = new Expense
             {
                 Description = $"Settlement: {note ?? "Debt payment"}",
@@ -332,10 +332,10 @@ namespace SplitwiseAPI.Services.Services
 
             var createdExpense = await _expenseRepository.CreateAsync(settlementExpense);
 
-            // Create UserExpense records for settlement
+
             var settlementUserExpenses = new List<UserExpense>
             {
-                // Debtor pays the settlement amount
+
                 new UserExpense
                 {
                     UserId = debtorUserId,
@@ -343,7 +343,7 @@ namespace SplitwiseAPI.Services.Services
                     Amount = amount,
                     Type = UserExpenseType.PAID_BY
                 },
-                // Creditor receives the settlement amount
+
                 new UserExpense
                 {
                     UserId = creditorUserId,
@@ -360,8 +360,8 @@ namespace SplitwiseAPI.Services.Services
 
         public async Task<SettlementHistoryDto> RecordSettlementAsync(int debtorUserId, int creditorUserId, decimal amount, string? note = null)
         {
-            // In a real implementation, you might have a Settlements table
-            // For now, we'll create a settlement record DTO
+
+
             var debtorUser = await _userRepository.GetByIdAsync(debtorUserId);
             var creditorUser = await _userRepository.GetByIdAsync(creditorUserId);
 
@@ -379,7 +379,7 @@ namespace SplitwiseAPI.Services.Services
             };
         }
 
-        // Dashboard and reporting
+
         public async Task<UserDashboardDto> GetUserDashboardAsync(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
@@ -450,7 +450,7 @@ namespace SplitwiseAPI.Services.Services
             return activeDebts;
         }
 
-        // Statistics and analytics
+
         public async Task<decimal> GetUserTotalPaidAsync(int userId)
         {
             return await _userExpenseRepository.GetUserTotalPaidAsync(userId);
@@ -472,7 +472,7 @@ namespace SplitwiseAPI.Services.Services
             return userExpenses.Select(MapToResponseDto);
         }
 
-        // Validation operations
+
         public async Task<bool> ValidateUserExpenseBalanceAsync(int expenseId)
         {
             return await _userExpenseRepository.ValidateUserExpenseBalanceAsync(expenseId);
@@ -493,7 +493,7 @@ namespace SplitwiseAPI.Services.Services
             return await _userExpenseRepository.ExistsAsync(id);
         }
 
-        // Bulk operations
+
         public async Task<bool> DeleteUserExpensesByExpenseIdAsync(int expenseId)
         {
             return await _userExpenseRepository.DeleteByExpenseIdAsync(expenseId);
@@ -504,7 +504,7 @@ namespace SplitwiseAPI.Services.Services
             return await _userExpenseRepository.DeleteByUserIdAsync(userId);
         }
 
-        // Advanced debt calculations
+
         public async Task<IEnumerable<(int DebtorId, int CreditorId, decimal Amount)>> CalculateOptimalSettlementsAsync(int groupId)
         {
             return await _userExpenseRepository.GetSimplifiedGroupDebtsAsync(groupId);
@@ -516,7 +516,7 @@ namespace SplitwiseAPI.Services.Services
             return debts.Count();
         }
 
-        // Expense-specific operations
+
         public async Task<IEnumerable<UserExpenseResponseDto>> GetPaidByUserExpensesAsync(int expenseId)
         {
             var userExpenses = await _userExpenseRepository.GetPaidByUserExpensesAsync(expenseId);
@@ -529,7 +529,7 @@ namespace SplitwiseAPI.Services.Services
             return userExpenses.Select(MapToResponseDto);
         }
 
-        // Private helper methods
+
         private static UserExpenseResponseDto MapToResponseDto(UserExpense userExpense)
         {
             return new UserExpenseResponseDto

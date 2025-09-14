@@ -11,7 +11,6 @@ namespace SplitwiseAPI.DTOs.UserExpenseDTOs
         public string? Type { get; set; }
     }
 
-    // Borç ödeme için
     public class SettleDebtDto
     {
         [Required(ErrorMessage = "Debtor user ID is required")]

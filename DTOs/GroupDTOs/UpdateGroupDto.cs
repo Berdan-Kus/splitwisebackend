@@ -8,7 +8,6 @@ namespace SplitwiseAPI.DTOs.GroupDTOs
         public string? Name { get; set; }
     }
 
-    // Grup üyelerini eklemek/çıkarmak için ayrı DTO
     public class ManageGroupMembersDto
     {
         [Required]
